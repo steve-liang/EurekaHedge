@@ -1,0 +1,16 @@
+Code,Name
+458,EmergingMarket
+474,Arbitrage
+476,CTA
+477,DistressedDebt
+478,EventDriven
+479,FixedIncome
+480,EquityLongShort
+481,Macro
+483,MultiStrategy
+485,RelativeValue
+641,RelativeValueVolatility
+642,ShortVolatility
+644,EquityMarketNeutral
+648,FX
+650,Commodity
