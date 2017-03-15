@@ -12,4 +12,4 @@ Still under construction...
 
 ## Quick Peek
 
-![Start Page](/figure/quickPeek.png)
+![Start Page](/figure/quickPeek.PNG)
