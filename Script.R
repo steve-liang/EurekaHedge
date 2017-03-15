@@ -6,7 +6,6 @@ library(reshape2)
 library(scales)
 library(ggthemes)
 library(PerformanceAnalytics)
-# Quandl.api_key("jU9SSmUJFjivxgnYcFLp")
 
 read.quandl <- function(qcode){
   data <- Quandl(qcode$Code)
@@ -27,20 +26,36 @@ to.xts <- function(x){
 }
 attach <- function(x) paste(BASE, x, sep='/')
 
+add_zeros <- function(x){
+  zeros <- x[1,1:ncol(x)]
+  zeros$Date <- zeros$Date %m-% months(1)
+  zeros[,2:ncol(zeros)] <- 0
+  return(rbind(zeros, x))
+}
+
+
+Quandl.api_key("jU9SSmUJFjivxgnYcFLp")
+
 BASE <- 'EUREKA'
 QC <- read.csv('CodeList.csv',stringsAsFactors = F)
 
 QC <- data.frame(Code = sapply(QC[,1],attach), Name = QC$Name, stringsAsFactors = F)
 QC <- setNames(split(QC, seq(nrow(QC))), QC$Name)
 
-# Aggregate to returns data frame/xts
+# Get raw data from Quandl
 returns <- returns.data.frame(lapply(QC, read.quandl))
 
-# arrange the returns by Date
+# arrange the returns by Date, format to decimal, add 0s at first row
 returns <- arrange(returns, Date)
+returns[sapply(returns, is.numeric)] <- returns[sapply(returns, is.numeric)] / 100
+
+ret <- add_zeros(returns)
+
+# Select returns of interest
+# ret <- filter()
 
 # Create the value index
-perf <-data.frame(Date = returns[,1], cumprod(1+returns[,-1]/100))
+perf <- data.frame(Date = ret[,1], cumprod(1+ret[,-1]))
 
 snapshot <- filter(returns, Date == '2016-12-31')
 recent <- filter(returns, Date >= Sys.Date() %m-% months(6))
