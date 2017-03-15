@@ -94,6 +94,6 @@ ggplot(data = melt.returns[,-1], aes(x=variable, y=value)) +
 ggplot(data = melt.returns[,-1], aes(value)) + 
   geom_histogram(aes(fill = variable)) +
   facet_wrap(~variable) +
-  labs(title = "Return distribution") +
+  labs(title = "Return Distribution") +
   theme(axis.title.x = element_blank(), legend.position="none")
 
