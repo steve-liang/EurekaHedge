@@ -2,7 +2,6 @@ source('functions.R')
 
 Quandl.api_key("jU9SSmUJFjivxgnYcFLp")
 
-BASE <- 'EUREKA'
 QC <- read.csv('CodeList.csv',stringsAsFactors = F)
 
 QC <- data.frame(Code = sapply(QC[,1],attach), Name = QC$Name, stringsAsFactors = F)

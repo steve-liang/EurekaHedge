@@ -7,6 +7,8 @@ library(scales)
 library(ggthemes)
 library(PerformanceAnalytics)
 
+BASE <- 'EUREKA'
+
 read.quandl <- function(qcode){
   data <- Quandl(qcode$Code)
   colnames(data) <- c('Date', qcode$Name)
