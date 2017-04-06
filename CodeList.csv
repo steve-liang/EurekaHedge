@@ -1,4 +1,5 @@
 Code,Name
+124,AbsoluteValue
 458,EmergingMarket
 474,Arbitrage
 476,CTA
@@ -9,8 +10,8 @@ Code,Name
 481,Macro
 483,MultiStrategy
 485,RelativeValue
-641,RelativeValueVolatility
 642,ShortVolatility
 644,EquityMarketNeutral
+647,TrendFollowing
 648,FX
 650,Commodity

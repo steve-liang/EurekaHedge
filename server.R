@@ -16,7 +16,7 @@ returns[sapply(returns, is.numeric)] <- returns[sapply(returns, is.numeric)] / 1
 
 shinyServer(function(input, output, session){
 
-  output$index <- renderPlot({
+    output$index <- renderPlot({
     # Select dates of interest
     returns <- filter(returns, Date >= Sys.Date() %m-% months(24))
     
@@ -34,7 +34,7 @@ shinyServer(function(input, output, session){
       geom_text(data = filter(melt.perf, Date == max(melt.perf$Date)), aes(label=variable)) + 
       labs(y = "Performance Index", title = "24-month Hedge Fund Performance Curve") + 
       theme(legend.position="none")
-  })
+    })
   
   # output$table <- renderTable({
   #   dt <- arrange(melt(snapshot, id = 'Date')[2:3], -value)
@@ -45,8 +45,13 @@ shinyServer(function(input, output, session){
   
   output$sorted <- renderPlot({
     
+    monthBack <-  input$TimeSelector
+    
     # most recent returns
-    snapshot <- tail(returns, 1)
+    # snapshot <- tail(returns, 1)
+    snapshot <- returns[nrow(returns) - monthBack, ]
+    lastDate <- returns[nrow(returns) - monthBack, 1]
+    
     
     # In order to display on ggplot we need to melt the returns data frame
     melt.snapshot <- melt(snapshot, id='Date')
@@ -54,7 +59,7 @@ shinyServer(function(input, output, session){
     ggplot(data = melt.snapshot, aes(x = reorder(variable, value), y = value,  group=value)) +
       geom_bar(stat = "identity", position="dodge") +
       geom_text(aes(label=percent(value))) + 
-      labs(y = "Return (%)", title = "Performance Ranking", x = "Strategy") + 
+      labs(y = "Return (%)", title = paste0("Performance Ranking as of ", lastDate), x = "Strategy") + 
       coord_flip()
   })
   
