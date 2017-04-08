@@ -1,3 +1,7 @@
+# list.of.packages <- c("ggplot2", "Rcpp")
+# new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+# if(length(new.packages)) install.packages(new.packages)
+
 library(Quandl)
 library(ggplot2)
 library(lubridate)
@@ -6,6 +10,7 @@ library(reshape2)
 library(scales)
 library(ggthemes)
 library(PerformanceAnalytics)
+library(quantmod)
 
 BASE <- 'EUREKA'
 
@@ -35,3 +40,8 @@ add_zeros <- function(x){
   zeros[,2:ncol(zeros)] <- 0
   return(rbind(zeros, x))
 }
+
+rank.strategies <- function(x){
+  data.frame("Date"=x[,1], t(apply(-x[,-1], 1, rank, ties.method = 'min')))
+}
+

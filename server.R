@@ -7,18 +7,29 @@ QC <- read.csv('CodeList.csv',stringsAsFactors = F)
 QC <- data.frame(Code = sapply(QC[,1],attach), Name = QC$Name, stringsAsFactors = F)
 QC <- setNames(split(QC, seq(nrow(QC))), QC$Name)
 
-# Get raw data from Quandl
+# Get EurekaHedge data from Quandl and transform to % term
 returns <- returns.data.frame(lapply(QC, read.quandl))
+returns[sapply(returns, is.numeric)] <- returns[sapply(returns, is.numeric)] / 100
+
+# Get SP500 index returns
+SPX <- Quandl("CHRIS/CME_SP1", transform="rdiff", collapse="monthly", start_date="2000-01-01")
+SPX <- data.frame(SPX$Date, SPX$Settle)
+colnames(SPX) <- c('Date', 'SPX')
+
+returns <- left_join(SPX, returns, by = 'Date')
 
 # arrange the returns by Date, format to decimal, add 0s at first row
-returns <- arrange(returns, Date)
-returns[sapply(returns, is.numeric)] <- returns[sapply(returns, is.numeric)] / 100
+returns <- na.omit(arrange(returns, Date))
 
 shinyServer(function(input, output, session){
 
     output$index <- renderPlot({
+      
+    # Select starting time for performance 
+    monthBack <- input$TimeSelector
+      
     # Select dates of interest
-    returns <- filter(returns, Date >= Sys.Date() %m-% months(24))
+    returns <- filter(returns, Date >= Sys.Date() %m-% months(monthBack))
     
     # Add zeros to make index start from 1
     returns <- add_zeros(returns)
@@ -32,7 +43,7 @@ shinyServer(function(input, output, session){
     ggplot(data = melt.perf, aes(x = Date, y = value,  group=variable)) +
       geom_line(aes(colour=variable)) +
       geom_text(data = filter(melt.perf, Date == max(melt.perf$Date)), aes(label=variable)) + 
-      labs(y = "Performance Index", title = "24-month Hedge Fund Performance Curve") + 
+      labs(y = "Performance Index", title = paste0(monthBack, "-month Hedge Fund Performance Curve")) + 
       theme(legend.position="none")
     })
   
@@ -45,7 +56,7 @@ shinyServer(function(input, output, session){
   
   output$sorted <- renderPlot({
     
-    monthBack <-  input$TimeSelector
+    monthBack <-  input$MonthSelector
     
     # most recent returns
     # snapshot <- tail(returns, 1)
