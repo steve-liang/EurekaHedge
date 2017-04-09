@@ -18,11 +18,11 @@ shinyUI(navbarPage("EurekaHedge Dashboard",
                 
                 fluidRow(    
                   column(6,
-                         sliderInput("TimeSelector", label = h5("Trailing # Months Performance"), min = 0, max = 200, value = 12), 
+                         sliderInput("TimeSelector", label = h5("Trailing # Month(s)"), min = 0, max = 200, value = 12), 
                          align = "center"
                   ),
                   column(6,
-                         sliderInput("MonthSelector", label = h5("# Months Ago"), min = 0, max = 12, value = 0), 
+                         sliderInput("MonthSelector", label = h5("# Month(s) Ago"), min = 0, max = 12, value = 0), 
                          align = "center"
                   )
                 )

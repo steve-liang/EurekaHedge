@@ -42,8 +42,9 @@ shinyServer(function(input, output, session){
     
     ggplot(data = melt.perf, aes(x = Date, y = value,  group=variable)) +
       geom_line(aes(colour=variable)) +
+      theme_economist() + 
       geom_text(data = filter(melt.perf, Date == max(melt.perf$Date)), aes(label=variable)) + 
-      labs(y = "Performance Index", title = paste0(monthBack, "-month Hedge Fund Performance Curve")) + 
+      labs(y = "Performance Index", title = paste0("Trailing ", monthBack, "-month Hedge Fund Performance Curve")) + 
       theme(legend.position="none")
     })
   
@@ -52,7 +53,6 @@ shinyServer(function(input, output, session){
   #   colnames(dt) <- c('Strategy', 'Return')
   #   dt
   # })
-  
   
   output$sorted <- renderPlot({
     
@@ -69,6 +69,7 @@ shinyServer(function(input, output, session){
     
     ggplot(data = melt.snapshot, aes(x = reorder(variable, value), y = value,  group=value)) +
       geom_bar(stat = "identity", position="dodge") +
+      theme_economist() + 
       geom_text(aes(label=percent(value))) + 
       labs(y = "Return (%)", title = paste0("Performance Ranking as of ", lastDate), x = "Strategy") + 
       coord_flip()
@@ -86,7 +87,8 @@ shinyServer(function(input, output, session){
       scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
                            midpoint = 0, limit = c(-1,1), space = "Lab", 
                            name="Pearson\nCorrelation") +
-      theme_minimal() + # minimal theme
+      labs(title = "Correlation Between Different Hedge Fund Strategies") +
+      theme_economist() + # minimal theme
       theme(axis.text.x = element_text(angle = 45, vjust = 1, size = 12, hjust = 1)) +
       coord_fixed()
     
