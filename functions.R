@@ -45,3 +45,8 @@ rank.strategies <- function(x){
   data.frame("Date"=x[,1], t(apply(-x[,-1], 1, rank, ties.method = 'min')))
 }
 
+# Get upper triangle of the correlation matrix
+get.upper.tri <- function(cormat){
+  cormat[lower.tri(cormat)]<- NA
+  return(cormat)
+}

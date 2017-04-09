@@ -7,22 +7,29 @@ shinyUI(navbarPage("EurekaHedge Dashboard",
                 
                 fluidRow(    
                   column(6,
-                         plotOutput("index", height = 600), align = "center"
+                         plotOutput("index", height = 600), 
+                         align = "center"
                   ),
                   column(6,
-                         plotOutput("sorted", height = 600), align = "center"
+                         plotOutput("sorted", height = 600), 
+                         align = "center"
                   )
                 ),
                 
                 fluidRow(    
                   column(6,
-                         sliderInput("TimeSelector", label = h5("Trailing # Months Performance"), min = 0, max = 200, value = 12), align = "center"
+                         sliderInput("TimeSelector", label = h5("Trailing # Months Performance"), min = 0, max = 200, value = 12), 
+                         align = "center"
                   ),
                   column(6,
-                         sliderInput("MonthSelector", label = h5("# Months Ago"), min = 0, max = 12, value = 0), align = "center"
+                         sliderInput("MonthSelector", label = h5("# Months Ago"), min = 0, max = 12, value = 0), 
+                         align = "center"
                   )
-                  
                 )
+       ),
+       
+       tabPanel("Correlation Heatmap", 
+                plotOutput("correlation", height = 800)        
        )
 ))
 
