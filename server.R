@@ -46,6 +46,7 @@ shinyServer(function(input, output, session){
       geom_text(data = filter(melt.perf, Date == max(melt.perf$Date)), aes(label=variable)) + 
       labs(y = "Performance Index", title = paste0("Trailing ", monthBack, "-month Hedge Fund Performance Curve")) + 
       theme(legend.position="none")
+    
     })
   
   # output$table <- renderTable({
@@ -77,6 +78,9 @@ shinyServer(function(input, output, session){
   
   output$correlation <- renderPlot({
     
+    startDate <- head(returns,1)$Date
+    endDate <- tail(returns,1)$Date
+    
     corr <- round(cor(returns[,-1]),2)
     corr <- get.upper.tri(corr)
     corr <- melt(corr, na.rm = TRUE)
@@ -87,7 +91,7 @@ shinyServer(function(input, output, session){
       scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
                            midpoint = 0, limit = c(-1,1), space = "Lab", 
                            name="Pearson\nCorrelation") +
-      labs(title = "Correlation Between Different Hedge Fund Strategies") +
+      labs(title = paste0("Correlation Between Different Hedge Fund Strategies\n(between ", startDate," and ", endDate,")")) +
       theme_economist() + # minimal theme
       theme(axis.text.x = element_text(angle = 45, vjust = 1, size = 12, hjust = 1)) +
       coord_fixed()
@@ -102,7 +106,7 @@ shinyServer(function(input, output, session){
         panel.background = element_blank(),
         axis.ticks = element_blank(),
         legend.justification = c(1, 0),
-        legend.position = c(0.6, 0.7),
+        legend.position = c(0.5, 0.8),
         legend.direction = "horizontal") +
       guides(fill = guide_colorbar(barwidth = 7, barheight = 1,
                                    title.position = "top", title.hjust = 0.5))

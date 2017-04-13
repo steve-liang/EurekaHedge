@@ -11,6 +11,7 @@ library(scales)
 library(ggthemes)
 library(PerformanceAnalytics)
 library(quantmod)
+# library(plotly)
 
 BASE <- 'EUREKA'
 

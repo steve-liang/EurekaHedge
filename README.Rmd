@@ -10,8 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Introduction
 
 This dashboard leverages Quandl's free EurekaHedge database to display hedge fund performance across different strategies, regions, etc.
-Still under construction...
 
-## Quick Peek
+This ShinyApp is hosted at http://35.162.235.49:3838/EurekaHedge/
 
-![Start Page](/figure/quickPeek.PNG)
+Update on Apr 12, 2017: New feature-Correlation Heatmap has been added. More to come.
+
+
+
+
