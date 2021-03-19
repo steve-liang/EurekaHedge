@@ -1,5 +1,3 @@
-source('functions.R')
-
 Quandl.api_key(Sys.getenv("QUANDL_API_KEY"))
 
 QC <- read.csv('CodeList.csv',stringsAsFactors = F)
