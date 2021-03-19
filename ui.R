@@ -7,7 +7,7 @@ shinyUI(navbarPage("EurekaHedge Dashboard",
                 
                 fluidRow(    
                   column(6,
-                         plotOutput("index", height = 600), 
+                         plotlyOutput("index", height = 600), 
                          align = "center"
                   ),
                   column(6,

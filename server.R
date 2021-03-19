@@ -22,12 +22,12 @@ returns <- left_join(SPX, returns, by = 'Date')
 returns <- na.omit(arrange(returns, Date))
 
 shinyServer(function(input, output, session){
-
-    output$index <- renderPlot({
-      
+  
+  output$index <- renderPlotly({
+    
     # Select starting time for performance 
     monthBack <- input$TimeSelector
-      
+    
     # Select dates of interest
     returns <- filter(returns, Date >= Sys.Date() %m-% months(monthBack))
     
@@ -40,14 +40,16 @@ shinyServer(function(input, output, session){
     # Chart performance curves
     melt.perf <- melt(perf, id = 'Date')
     
-    ggplot(data = melt.perf, aes(x = Date, y = value,  group=variable)) +
+    g <- ggplot(data = melt.perf, aes(x = Date, y = value,  group=variable)) +
       geom_line(aes(colour=variable)) +
       theme_economist() + 
       geom_text(data = filter(melt.perf, Date == max(melt.perf$Date)), aes(label=variable)) + 
       labs(y = "Performance Index", title = paste0("Trailing ", monthBack, "-month Hedge Fund Performance Curve")) + 
       theme(legend.position="none")
     
-    })
+    ggplotly(g)
+    
+  })
   
   # output$table <- renderTable({
   #   dt <- arrange(melt(snapshot, id = 'Date')[2:3], -value)
