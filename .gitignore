@@ -2,6 +2,10 @@
 .Rhistory
 .Rapp.history
 
+# Env Variables
+.Rprofile
+.Renviron
+
 # Session Data files
 .RData
 
