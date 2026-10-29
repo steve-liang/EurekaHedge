@@ -1,7 +1,3 @@
-# list.of.packages <- c("ggplot2", "Rcpp")
-# new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-# if(length(new.packages)) install.packages(new.packages)
-
 library(Quandl)
 library(ggplot2)
 library(lubridate)
@@ -9,9 +5,6 @@ library(dplyr)
 library(reshape2)
 library(scales)
 library(ggthemes)
-library(PerformanceAnalytics)
-library(quantmod)
-library(plotly)
 
 BASE <- 'EUREKA'
 
@@ -27,10 +20,6 @@ returns.data.frame <- function(x){
     df <- full_join(df, x[[i]], by = 'Date')
   }
   return(df)
-}
-
-to.xts <- function(x){
-  x1 <- as.xts(x[,-1],order.by = x[,1])
 }
 
 attach <- function(x) paste(BASE, x, sep='/')

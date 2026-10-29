@@ -1,0 +1,6 @@
+Package: EurekaHedge
+Title: EurekaHedge Dashboard Screenshots
+Version: 2.0.0
+Description: Monthly screenshots of hedge fund performance views.
+License: MIT
+Imports: Quandl, ggplot2, lubridate, dplyr, reshape2, scales, ggthemes, ragg

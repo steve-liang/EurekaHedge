@@ -7,12 +7,13 @@ output: github_document
 
 ## Introduction
 
-This dashboard leverages Quandl's free EurekaHedge database to display hedge fund performance across different strategies, regions, etc.
+This project uses Quandl/Nasdaq Data Link's EurekaHedge database to chart hedge fund performance across strategies.
 
-This ShinyApp is hosted at http://35.162.235.49:3838/EurekaHedge/
+A GitHub Actions workflow (`.github/workflows/screenshots.yml`) runs monthly (and on demand), installs the latest CRAN packages, and runs `render.R`, uploading four screenshots as a build artifact:
 
-Update on Apr 12, 2017: New feature-Correlation Heatmap has been added. More to come.
+1. Trailing 12-month performance curve
+2. Trailing 60-month performance curve
+3. Latest performance ranking
+4. Correlation heatmap
 
-
-
-
+Set the repository secret `QUANDL_API_KEY` (locally: the `QUANDL_API_KEY` environment variable) before running.
